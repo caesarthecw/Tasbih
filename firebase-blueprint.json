@@ -1,0 +1,152 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User preferences, tasbih growth totals, ghars coin balance, active customizations, and unlocked store items.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID of the owner." },
+        "displayName": { "type": "string", "description": "Display name shown in profile." },
+        "coins": { "type": "integer", "description": "Current Ghars coin balance." },
+        "totalLifetimeTasbih": { "type": "integer", "description": "Cumulative tasbih count powering plant growth." },
+        "todayTasbih": { "type": "integer", "description": "Today's tasbih count." },
+        "lastActiveDate": { "type": "string", "description": "YYYY-MM-DD local date of last activity." },
+        "streakDays": { "type": "integer", "description": "Consecutive active days." },
+        "activeDhikrId": { "type": "string", "description": "Currently selected dhikr document ID." },
+        "selectedBeadColorId": { "type": "string", "description": "Selected bead material preset ID." },
+        "customBeadHex": { "type": "string", "description": "Custom hex color (#RRGGBB) for beads." },
+        "selectedThemeId": { "type": "string", "description": "Selected app color theme ID." },
+        "selectedBackgroundId": { "type": "string", "description": "Selected background scene ID." },
+        "selectedPlantId": { "type": "string", "description": "Selected plant species ID." },
+        "soundEnabled": { "type": "boolean", "description": "Whether tap sound is enabled." },
+        "soundVolume": { "type": "number", "description": "Audio volume from 0.0 to 1.0." },
+        "soundTone": { "type": "string", "enum": ["water_drop", "wood_bead", "crystal_chime", "rain_mist"], "description": "Selected tap audio profile." },
+        "hapticEnabled": { "type": "boolean", "description": "Whether haptic vibration on tap is enabled." },
+        "unlockedItems": { "type": "array", "description": "List of unlocked store item IDs." },
+        "vipUnlocked": { "type": "boolean", "description": "Whether the full VIP botanical bundle is unlocked." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp (FieldValue.serverTimestamp())." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server update timestamp (FieldValue.serverTimestamp())." }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "coins",
+        "totalLifetimeTasbih",
+        "todayTasbih",
+        "lastActiveDate",
+        "streakDays",
+        "activeDhikrId",
+        "selectedBeadColorId",
+        "customBeadHex",
+        "selectedThemeId",
+        "selectedBackgroundId",
+        "selectedPlantId",
+        "soundEnabled",
+        "soundVolume",
+        "soundTone",
+        "hapticEnabled",
+        "unlockedItems",
+        "vipUnlocked",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DhikrItem": {
+      "title": "DhikrItem",
+      "description": "A daily dhikr phrase with target goal, today's count, and lifetime count.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "phrase": { "type": "string", "description": "Arabic dhikr phrase." },
+        "subtitle": { "type": "string", "description": "Short meaning or note." },
+        "dailyGoal": { "type": "integer", "description": "Daily target count." },
+        "todayCount": { "type": "integer", "description": "Tasbih count recorded today." },
+        "totalCount": { "type": "integer", "description": "Lifetime count for this dhikr." },
+        "lastUpdatedDate": { "type": "string", "description": "YYYY-MM-DD local date." },
+        "accentHex": { "type": "string", "description": "Hex color accent (#RRGGBB)." },
+        "sortOrder": { "type": "integer", "description": "Display order index." },
+        "customEntry": { "type": "boolean", "description": "True if created by the user." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server update timestamp." }
+      },
+      "required": [
+        "userId",
+        "phrase",
+        "subtitle",
+        "dailyGoal",
+        "todayCount",
+        "totalCount",
+        "lastUpdatedDate",
+        "accentHex",
+        "sortOrder",
+        "customEntry",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DailyLog": {
+      "title": "DailyLog",
+      "description": "Cloud-synced daily tasbih summary keyed by YYYY-MM-DD.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "dateKey": { "type": "string", "description": "Date key YYYY-MM-DD." },
+        "totalCount": { "type": "integer", "description": "Total tasbihat completed on this date." },
+        "coinsEarned": { "type": "integer", "description": "Coins earned on this date." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server update timestamp." }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "totalCount",
+        "coinsEarned",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "PurchaseRecord": {
+      "title": "PurchaseRecord",
+      "description": "Ledger entry for coin unlocks and Google Play Billing purchases.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID." },
+        "productId": { "type": "string", "description": "Store item or Play Billing SKU identifier." },
+        "title": { "type": "string", "description": "Human-readable item or bundle title." },
+        "purchaseType": { "type": "string", "enum": ["coin_unlock", "play_billing_coins", "play_billing_vip", "reward"], "description": "Transaction category." },
+        "coinDelta": { "type": "integer", "description": "Net coin change." },
+        "priceDisplay": { "type": "string", "description": "Formatted price string." },
+        "orderToken": { "type": "string", "description": "Play Billing purchase token or transaction reference." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server creation timestamp." }
+      },
+      "required": [
+        "userId",
+        "productId",
+        "title",
+        "purchaseType",
+        "coinDelta",
+        "priceDisplay",
+        "orderToken",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile, coin wallet, plant progress, and visual/audio customization state."
+    },
+    "/users/{userId}/adhkar/{dhikrId}": {
+      "schema": { "$ref": "#/entities/DhikrItem" },
+      "description": "User's daily adhkar collection (presets and custom entries)."
+    },
+    "/users/{userId}/dailyLogs/{dateKey}": {
+      "schema": { "$ref": "#/entities/DailyLog" },
+      "description": "Daily tasbih counts synced across devices."
+    },
+    "/users/{userId}/purchases/{purchaseId}": {
+      "schema": { "$ref": "#/entities/PurchaseRecord" },
+      "description": "In-app coin and Play Billing transaction ledger."
+    }
+  }
+}

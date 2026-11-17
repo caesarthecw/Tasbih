@@ -1,0 +1,6 @@
+{
+  "name": "مسبحة غرس",
+  "description": "مسبحة إلكترونية تفاعلية بخرز متحرك وقطرات ماء ونبتة تنمو مع التسبيح ومزامنة سحابية ومتجر للثيمات والنباتات.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
